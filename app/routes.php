@@ -11,7 +11,10 @@
 |
 */
 
-Route::get('/', function()
-{
-	return View::make('hello');
-});
+Route::get( '/', function () {
+    return View::make( 'hello' );
+} );
+
+Route::controller( 'users', 'UserController' );
+Route::controller( 'vouchers', 'VoucherController' );
+Route::controller( 'checks', 'CheckController' );
