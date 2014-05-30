@@ -1,6 +1,8 @@
 <?php
 
 class VoucherController extends \BaseController {
+    public $restful = true;
+
 
 	/**
 	 * Display a listing of the resource.
@@ -9,7 +11,9 @@ class VoucherController extends \BaseController {
 	 */
 	public function index()
 	{
-		//
+		$vouchers = Voucher::all();
+        var_dump($vouchers);
+
 	}
 
 
@@ -81,6 +85,10 @@ class VoucherController extends \BaseController {
 	{
 		//
 	}
+
+    public function missingMethod($parameters = array()) {
+        echo "Missing";
+    }
 
 
 }
