@@ -12,7 +12,8 @@ class VoucherController extends \BaseController {
 	public function index()
 	{
 		$vouchers = Voucher::all();
-        var_dump($vouchers);
+        $result = $vouchers->toArray();
+        return Response::json(['vouchers'=>$result]);
 
 	}
 
@@ -41,13 +42,11 @@ class VoucherController extends \BaseController {
         $voucher->check_id = 23;
 
         if($voucher->save()) {
-            $result = ['message'=>'success', 'id'=>$voucher->id];
+            $result = ['meta' => ['message'=>'success', 'id'=>$voucher->id]];
         } else {
-            $result = ['message'=>'failure'];
+            $result = ['meta'=> ['message'=>'failure']];
         }
         return Response::json($result);
-        var_dump($voucher->save());
-        var_dump($voucher->getErrors());
 	}
 
 
