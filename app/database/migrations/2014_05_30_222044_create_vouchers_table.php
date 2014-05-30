@@ -17,7 +17,7 @@ class CreateVouchersTable extends Migration {
             $table->integer('check_id');
             $table->string('issued_to');
             $table->decimal('amount',5,2);
-            $table->tinyInt('redeemed')->default(0);
+            $table->tinyInteger('redeemed')->default(0);
             $table->timestamps();
         });
 
@@ -30,7 +30,7 @@ class CreateVouchersTable extends Migration {
 	 */
 	public function down()
 	{
-		//
+		Schema::drop('vouchers');
 	}
 
 }

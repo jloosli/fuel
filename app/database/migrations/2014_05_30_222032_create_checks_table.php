@@ -31,7 +31,7 @@ class CreateChecksTable extends Migration {
 	 */
 	public function down()
 	{
-		//
+		Schema::drop('checks');
 	}
 
 }
