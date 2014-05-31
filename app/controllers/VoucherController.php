@@ -77,10 +77,11 @@ class VoucherController extends \BaseController {
      *
      * @param  int $id
      *
+     * @throws Exception
      * @return Response
      */
     public function edit( $id ) {
-        //
+
     }
 
 
@@ -89,10 +90,26 @@ class VoucherController extends \BaseController {
      *
      * @param  int $id
      *
+     * @throws Exception
      * @return Response
      */
     public function update( $id ) {
-        //
+        $voucher            = Voucher::findOrFail($id);
+        if ($voucher->redeemed === 1) {
+            throw new \Exception('Voucher has already been redeemed', static::VOUCHER_REDEEMED);
+        }
+        $voucher->amount    = Input::get( 'amount' );
+        $voucher->issued_to = Input::get( 'issued_to' );
+        $voucher->check_id  = Input::get( 'check_id' );
+
+        if ( $voucher->save() ) {
+            $result = [ 'meta' => [ 'message' => 'success', 'code' => 200, 'id' => $voucher->id ] ];
+        } else {
+            $result = [ 'meta' => [ 'message' => 'failure', 'code' => 1, 'errors' => $voucher->getErrors() ] ];
+        }
+
+        return Response::json( $result );
+
     }
 
 
@@ -101,10 +118,16 @@ class VoucherController extends \BaseController {
      *
      * @param  int $id
      *
+     * @throws Exception
      * @return Response
      */
     public function destroy( $id ) {
-        //
+        $voucher            = Voucher::findOrFail($id);
+        if ($voucher->redeemed === 1) {
+            throw new \Exception('Voucher has already been redeemed', static::VOUCHER_REDEEMED);
+        }
+        $voucher->delete();
+
     }
 
     public function missingMethod( $parameters = array() ) {
