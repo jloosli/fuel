@@ -130,9 +130,4 @@ class VoucherController extends \BaseController {
 
     }
 
-    public function missingMethod( $parameters = array() ) {
-        echo "Missing";
-    }
-
-
 }
