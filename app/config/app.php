@@ -25,7 +25,7 @@ return array(
     |
     */
 
-    'url'             => 'http://localhost',
+    'url'             => 'http://fuel.loc',
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
