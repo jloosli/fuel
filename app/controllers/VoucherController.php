@@ -127,7 +127,7 @@ class VoucherController extends \BaseController {
             throw new \Exception('Voucher has already been redeemed', static::VOUCHER_REDEEMED);
         }
         $voucher->delete();
-
+        return Response::json( ['meta'=>['message'=> 'success', 'code' => 200]] );
     }
 
 }
