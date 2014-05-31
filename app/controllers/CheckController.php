@@ -9,7 +9,9 @@ class CheckController extends \BaseController {
 	 */
 	public function index()
 	{
-		//
+		$check = Check::all();
+
+
 	}
 
 
