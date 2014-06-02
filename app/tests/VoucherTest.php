@@ -7,11 +7,16 @@ class VoucherTest extends TestCase {
 	 *
 	 * @return void
 	 */
-	public function testBasicExample()
+	public function testGetRoute()
 	{
-		$crawler = $this->client->request('GET', '/vouchers');
-
+		$this->client->request('GET', '/api/v1/vouchers');
 		$this->assertTrue($this->client->getResponse()->isOk());
+        try {
+            $this->client->request( 'GET', '/api/v2/vouchers' );
+        } catch (Symfony\Component\HttpKernel\Exception\NotFoundHttpException $e) {
+            $this->assertTrue(true);
+        }
+
 	}
 
 }
