@@ -5,7 +5,7 @@
     "license":           "MIT",
     "version":           "0.1",
     "require":           {
-        "laravel/framework": "4.1.*",
+        "laravel/framework": "4.2.*",
         "way/database":      "dev-master"
     },
     "require-dev":       {

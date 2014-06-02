@@ -14,7 +14,7 @@ Route::resource( 'users', 'UserController' );
 Route::resource( 'vouchers', 'VoucherController' );
 Route::resource( 'checks', 'CheckController' );
 
-//Route::get( '/', function () {
-//    return View::make( 'hello' );
-//} );
+Route::get( '/', function () {
+    return View::make( 'hello' );
+} );
 

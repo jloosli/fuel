@@ -74,6 +74,18 @@ return array(
     */
 
     'key'             => 'K4ysu2Mjj3C83SDC0oCQO7fbDLSAOB9O',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Cipher
+    |--------------------------------------------------------------------------
+    |
+    | Not sure what this does, but 4.2 suggested adding this
+    |
+    */
+
+    'cipher' => MCRYPT_RIJNDAEL_256,
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
