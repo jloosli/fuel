@@ -6,4 +6,8 @@ class Check extends Model {
         'check_no' => 'required',
         'date_issued' => 'required'
     ];
+
+    public function vouchers() {
+        return $this->hasMany('Voucher');
+    }
 }

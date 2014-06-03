@@ -11,4 +11,8 @@ class Voucher extends Model {
         'amount'    => 'required'
     ];
 
+    public function check() {
+        $this->belongsTo('Check');
+    }
+
 }

@@ -2,6 +2,8 @@
 
 class CheckController extends \BaseController {
 
+    protected $stdVoucherAmt = 10;
+
     /**
      * Display a listing of the resource.
      *
@@ -21,16 +23,6 @@ class CheckController extends \BaseController {
 
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create() {
-        //
-    }
-
-
-    /**
      * Store a newly created resource in storage.
      *
      * @return Response
@@ -38,8 +30,8 @@ class CheckController extends \BaseController {
     public function store() {
         $check            = new Check;
         $check->amount    = Input::get( 'amount' );
-        $check->issued_to = Input::get( 'issued_to' );
-        $check->check_id  = Input::get( 'check_id' );
+        $check->check_no = Input::get( 'check_no' );
+        $check->date_issued  = Input::get( 'date_issued' );
 
         if ( $check->save() ) {
             $result = [ 'meta' => [ 'message' => 'success', 'code' => 200, 'id' => $check->id ] ];
@@ -66,6 +58,31 @@ class CheckController extends \BaseController {
             'meta'   => [ 'message' => 'success', 'code' => 200 ],
             'checks' => $result
         ] );
+    }
+
+    public function getVouchers($id) {
+        $check = Check::findOrFail($id);
+        $vouchers = $check->vouchers();
+
+        return Response::json( [
+            'meta' => ['message' => 'success', 'code' => 200],
+            'vouchers' => $vouchers
+        ]);
+    }
+
+    public function createVouchers($id) {
+        $check = Check::findOrFail($id);
+        $vouchers = [];
+        for($i=0; $i<(int) Input::get('vouchers'); $i++) {
+            $voucher = new Voucher;
+            $voucher->check_id = $id;
+            $voucher->issued_to = Input::get('issued_to');
+            $voucher->redeemed = 0;
+            $voucher->amount = $this->stdVoucherAmt;
+            $voucher->save();
+            $vouchers[] = $voucher;
+        }
+
     }
 
 

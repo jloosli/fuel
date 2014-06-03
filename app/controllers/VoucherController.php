@@ -22,12 +22,20 @@ class VoucherController extends \BaseController {
 
 
     /**
-     * Show the form for creating a new resource.
+     * Create new voucher
      *
      * @return Response
      */
-    public function create() {
-        //
+    public function create($amount, $check_id, $issued_to) {
+        $voucher            = new Voucher;
+        $voucher->amount    = $amount;
+        $voucher->issued_to = $check_id;
+        $voucher->check_id  = $issued_to;
+
+        if ( $voucher->save() ) {
+            return $voucher;
+        }
+        return false;
     }
 
 
@@ -37,12 +45,8 @@ class VoucherController extends \BaseController {
      * @return Response
      */
     public function store() {
-        $voucher            = new Voucher;
-        $voucher->amount    = Input::get( 'amount' );
-        $voucher->issued_to = Input::get( 'issued_to' );
-        $voucher->check_id  = Input::get( 'check_id' );
-
-        if ( $voucher->save() ) {
+        $voucher = $this->create( Input::get( 'amount' ), Input::get( 'check_id' ), Input::get( 'issued_to' ) );
+        if ( $voucher !== false ) {
             $result = [ 'meta' => [ 'message' => 'success', 'code' => 200, 'id' => $voucher->id ] ];
         } else {
             $result = [ 'meta' => [ 'message' => 'failure', 'code' => 1, 'errors' => $voucher->getErrors() ] ];
