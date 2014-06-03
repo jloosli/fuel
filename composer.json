@@ -5,8 +5,9 @@
     "license":           "MIT",
     "version":           "0.1",
     "require":           {
-        "laravel/framework": "4.2.*",
-        "way/database":      "dev-master"
+        "laravel/framework":     "4.2.*",
+        "way/database":          "*",
+        "aferrandini/phpqrcode": "1.0.1"
     },
     "require-dev":       {
         "ext-pdo_sqlite":  "*",

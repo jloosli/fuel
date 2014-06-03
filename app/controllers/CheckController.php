@@ -72,8 +72,14 @@ class CheckController extends \BaseController {
 
     public function createVouchers($id) {
         $check = Check::findOrFail($id);
+        $totalVouchers = (int) Input::get( 'vouchers' );
+        $toIssue = $totalVouchers * $this->stdVoucherAmt;
+        if($check->total_issued < $toIssue ) {
+            throw new \Exception("Not enough available on this check", static::INSUFFICIENT_FUNDS);
+        }
         $vouchers = [];
-        for($i=0; $i<(int) Input::get('vouchers'); $i++) {
+
+        for($i=0; $i< $totalVouchers; $i++) {
             $voucher = new Voucher;
             $voucher->check_id = $id;
             $voucher->issued_to = Input::get('issued_to');
@@ -82,6 +88,10 @@ class CheckController extends \BaseController {
             $voucher->save();
             $vouchers[] = $voucher;
         }
+        $check->total_issued += $toIssue;
+        $check->save();
+        // @todo Generate PDF
+        return Response::json(['meta'=>['message'=>'success', 'code'=>200]]);
 
     }
 
