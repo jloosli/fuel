@@ -128,14 +128,19 @@ class VoucherController extends \BaseController {
     public function destroy( $id ) {
         $voucher            = Voucher::findOrFail($id);
         if ($voucher->redeemed === 1) {
-            throw new \Exception('Voucher has already been redeemed', static::VOUCHER_REDEEMED);
+            throw new \Jloosli\Fuel\FuelError('Voucher has already been redeemed', static::VOUCHER_REDEEMED);
         }
         $voucher->delete();
         return Response::json( ['meta'=>['message'=> 'success', 'code' => 200]] );
     }
 
     public function print_vouchers($voucher_ids=[]) {
-        return View::make('vouchers');
+        $nf = new NumberFormatter('en-US',NumberFormatter::SPELLOUT);
+        $data=['data' =>
+            [['issued_to' => "Bob Jones", 'amount_text' => sprintf("%s dollars of GAS only (%0.2f)",ucfirst($nf->format(10)),10), 'issued_date' => date("M j, Y",strtotime('2014-05 23:23:10')) ]]
+        ];
+        $this->layout = 'vouchers';
+        return View::make('vouchers')->nest('child','child.voucher', $data);
     }
 
 }
