@@ -134,4 +134,8 @@ class VoucherController extends \BaseController {
         return Response::json( ['meta'=>['message'=> 'success', 'code' => 200]] );
     }
 
+    public function print_vouchers($voucher_ids=[]) {
+        return View::make('vouchers');
+    }
+
 }

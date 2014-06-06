@@ -5,15 +5,22 @@
     "license":           "MIT",
     "version":           "0.1",
     "require":           {
-        "laravel/framework":     "4.2.*",
-        "way/database":          "*",
-        "aferrandini/phpqrcode": "1.0.1"
+        "laravel/framework":                "4.2.*",
+        "way/database": "dev-master",
+        "aferrandini/phpqrcode":            "1.0.1"
     },
     "require-dev":       {
         "ext-pdo_sqlite":  "*",
         "phpunit/phpunit": "4.1.*",
         "mockery/mockery": "dev-master"
     },
+    "repositories":      [
+        {
+            "type": "vcs",
+            "url":  "https://github.com/jloosli/Laravel-Model-Validation"
+        }
+
+    ],
     "autoload":          {
         "classmap": [
             "app/commands",

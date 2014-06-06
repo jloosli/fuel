@@ -2,6 +2,7 @@
 
 class CheckController extends \BaseController {
 
+    const INSUFFICIENT_FUNDS = 1;
     protected $stdVoucherAmt = 10;
 
     /**
@@ -74,8 +75,8 @@ class CheckController extends \BaseController {
         $check = Check::findOrFail($id);
         $totalVouchers = (int) Input::get( 'vouchers' );
         $toIssue = $totalVouchers * $this->stdVoucherAmt;
-        if($check->total_issued < $toIssue ) {
-            throw new \Exception("Not enough available on this check", static::INSUFFICIENT_FUNDS);
+        if(($check->amount - $check->total_issued) < $toIssue ) {
+            throw new \Jloosli\Fuel\FuelError("Not enough funds available on this check", static::INSUFFICIENT_FUNDS);
         }
         $vouchers = [];
 

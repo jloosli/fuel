@@ -29,6 +29,10 @@ Route::group( array( 'prefix' => 'api/v1' ), function () {
     } );
 } );
 
+Route::get('/vouchers/print', [
+    'as'=>'printVouchers',
+    'uses' => 'VoucherController@print_vouchers'
+]);
 
 Route::get( '/', function () {
     return View::make( 'hello' );
