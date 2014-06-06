@@ -8,7 +8,8 @@
         "laravel/framework":     "4.2.*",
         "way/database":          "dev-master",
         "aferrandini/phpqrcode": "1.0.1",
-        "ext-intl":              "*"
+        "ext-intl":              "*",
+        "mikehaertl/phpwkhtmltopdf": "*"
     },
     "require-dev":       {
         "ext-pdo_sqlite":  "*",

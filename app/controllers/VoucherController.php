@@ -134,13 +134,39 @@ class VoucherController extends \BaseController {
         return Response::json( ['meta'=>['message'=> 'success', 'code' => 200]] );
     }
 
-    public function print_vouchers($voucher_ids=[]) {
+    public function print_vouchers($voucher_ids=[], $pdf=false) {
         $nf = new NumberFormatter('en-US',NumberFormatter::SPELLOUT);
-        $data=['data' =>
-            [['issued_to' => "Bob Jones", 'amount_text' => sprintf("%s dollars of GAS only (%0.2f)",ucfirst($nf->format(10)),10), 'issued_date' => date("M j, Y",strtotime('2014-05 23:23:10')) ]]
+        $url = route('getVoucher',['id'=>34]);
+        ob_start();
+        \PHPQRCode\QRcode::png($url);
+        $qrImg = base64_encode(ob_get_contents());
+        ob_end_clean();
+        $sample = [
+            'id'=>34533,
+            'issued_to' => "Bob Jones",
+            'amount_text' => sprintf("%s dollars ($%0.2f) of GAS only ",ucfirst($nf->format(10)),10),
+            'issued_date' => date("M j, Y",strtotime('2014-05 23:23:10')),
+            'qr' => sprintf("<img src='data:image/png;base64,%s' />",$qrImg)
         ];
-        $this->layout = 'vouchers';
-        return View::make('vouchers')->nest('child','child.voucher', $data);
+        $data=['data' =>[
+            $sample,
+            $sample,
+            $sample,
+            $sample,
+            $sample,
+        ]
+        ];
+        $view = View::make('vouchers')->nest('child','child.voucher', $data);
+        if($pdf) {
+            $rendered = $view->render();
+            $options = ['page-size'=>'Letter'];
+            $pdfFile = new WkHtmlToPdf($options);
+            $pdfFile->addPage($rendered);
+
+            return $pdfFile->send();
+        }
+        return $view;
+
     }
 
 }

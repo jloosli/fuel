@@ -16,7 +16,7 @@ Route::group( array( 'prefix' => 'api/v1' ), function () {
 
     Route:: group( array( 'prefix' => 'vouchers' ), function () {
         Route::get( '', [ 'as' => 'allVouchers', 'uses' => 'VoucherController@index' ] );
-        Route::get( '{id}', [ 'as' => 'allVouchers', 'uses' => 'VoucherController@show' ] );
+        Route::get( '{id}', [ 'as' => 'getVoucher', 'uses' => 'VoucherController@show' ] );
         Route::put( '{id}', [ 'as' => 'updateVoucher', 'uses' => 'VoucherController@update' ] );
     } );
 
@@ -29,7 +29,7 @@ Route::group( array( 'prefix' => 'api/v1' ), function () {
     } );
 } );
 
-Route::get('/vouchers/print', [
+Route::get('/vouchers/print/{vouchers}/{pdf?}', [
     'as'=>'printVouchers',
     'uses' => 'VoucherController@print_vouchers'
 ]);
