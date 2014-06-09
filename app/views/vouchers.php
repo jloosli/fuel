@@ -55,12 +55,12 @@
         }
 
         h2 {
-            font-size:   150%;
+            font-size:   130%;
             font-weight: bold;
         }
 
         h3 {
-            font-size:   130%;
+            font-size:   110%;
             font-weight: bold;
         }
 

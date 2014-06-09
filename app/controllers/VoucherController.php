@@ -143,7 +143,7 @@ class VoucherController extends \BaseController {
         ob_end_clean();
         $sample = [
             'id'=>34533,
-            'issued_to' => "Bob Jones",
+            'issued_to' => "Bob Jones and Marie Bartholomew hattius Jones",
             'amount_text' => sprintf("%s dollars ($%0.2f) of GAS only ",ucfirst($nf->format(10)),10),
             'issued_date' => date("M j, Y",strtotime('2014-05 23:23:10')),
             'qr' => sprintf("<img src='data:image/png;base64,%s' />",$qrImg)
