@@ -82,6 +82,10 @@
             text-align: right;
         }
 
+        .lower {
+            vertical-align: bottom;
+        }
+
         table {
             border:  2px solid black;
             padding: 10px;

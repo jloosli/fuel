@@ -11,7 +11,7 @@
     </tr>
     <tr>
 
-        <td>Eccles Park Ward<br>Issued: <?php echo $datum['issued_date']; ?></td>
+        <td class="lower">Eccles Park Ward<br>Issued: <?php echo $datum['issued_date']; ?></td>
         <td class="signature" colspan="3">Bishop Jared Loosli</td>
     </tr>
 </table>
