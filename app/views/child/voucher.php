@@ -2,7 +2,7 @@
 <table>
     <tr>
         <td class="ctr" colspan="3"><h2>Blair&CloseCurlyQuote;s Service Station GAS Coupon</h2></td>
-        <td colspan="1" class="rt">Voucher #: <?php echo $datum->id; ?></td>
+        <td colspan="1" class="rt">Voucher #: <?php echo $datum->external_id; ?></td>
     </tr>
     <tr>
         <td rowspan="2" class="qr"><?php echo $datum->qr; ?></td>

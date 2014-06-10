@@ -2,6 +2,15 @@
 
 class Voucher extends Model {
 
+    public $incrementing = false;
+
+    public static function boot() {
+        parent::boot();
+        static::creating(function($model) {
+            $model->id = uniqid();
+        });
+    }
+
     protected $fillable = [
         'issued_to',
         'amount'

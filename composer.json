@@ -14,7 +14,8 @@
     "require-dev":       {
         "ext-pdo_sqlite":  "*",
         "phpunit/phpunit": "4.1.*",
-        "mockery/mockery": "dev-master"
+        "mockery/mockery": "dev-master",
+        "way/generators": "2.*"
     },
     "repositories":      [
         {
