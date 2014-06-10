@@ -71,10 +71,10 @@ App::error(function ( \Illuminate\Database\Eloquent\ModelNotFoundException $exce
             'meta' => [
                 'error'   => true,
                 'message' => "Could not find item",
-                'code'    => 400
+                'code'    => $code
             ]
         ],
-        400 );
+        $code );
 } );
 
 /*
