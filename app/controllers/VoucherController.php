@@ -13,7 +13,7 @@ class VoucherController extends \BaseController {
         $vouchers = Voucher::all();
         $result   = $vouchers->toArray();
 
-        return Response::json( [
+        return Response::make( [
             'meta'     => [ 'message' => 'success', 'code' => 200 ],
             'vouchers' => $result
         ] );
@@ -53,7 +53,7 @@ class VoucherController extends \BaseController {
             $result = [ 'meta' => [ 'message' => 'failure', 'code' => 1, 'errors' => $voucher->getErrors() ] ];
         }
 
-        return Response::json( $result );
+        return Response::make( $result );
     }
 
 
@@ -68,7 +68,7 @@ class VoucherController extends \BaseController {
         $voucher = Voucher::findOrFail( $id );
         $result  = $voucher->toArray();
 
-        return Response::json( [
+        return Response::make( [
             'meta'     => [ 'message' => 'success', 'code' => 200, 'used' => $result['redeemed'] === "1" ],
             'vouchers' => $result
         ] );
@@ -113,7 +113,7 @@ class VoucherController extends \BaseController {
             $result = [ 'meta' => [ 'message' => 'failure', 'code' => 1, 'errors' => $voucher->getErrors() ] ];
         }
 
-        return Response::json( $result );
+        return Response::make( $result );
 
     }
 

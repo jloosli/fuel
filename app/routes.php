@@ -11,10 +11,10 @@
 |
 */
 
-Route::group( array( 'prefix' => 'api/v1' ), function () {
+Route::api( array( 'version' => 'v1' ), function () {
     Route::resource( 'users', 'UserController' );
 
-    Route:: group( array( 'prefix' => 'vouchers' ), function () {
+    Route::group( array( 'prefix' => 'vouchers' ), function () {
         Route::get( '', [ 'as' => 'allVouchers', 'uses' => 'VoucherController@index' ] );
         Route::get( '{id}', [ 'as' => 'getVoucher', 'uses' => 'VoucherController@show' ] );
         Route::put( '{id}', [ 'as' => 'updateVoucher', 'uses' => 'VoucherController@update' ] );
@@ -28,6 +28,8 @@ Route::group( array( 'prefix' => 'api/v1' ), function () {
         Route::post( '{id}/vouchers', [ 'as' => 'issueVouchers', 'uses' => 'CheckController@createVouchers' ] );
     } );
 } );
+
+Route::get( 'voucher/{id}', [ 'as' => 'getVoucher', 'uses' => 'VoucherController@show' ] );
 
 Route::get('/vouchers/print/{vouchers}/{pdf?}', [
     'as'=>'printVouchers',

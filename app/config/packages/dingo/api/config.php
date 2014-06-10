@@ -66,10 +66,10 @@ return [
 		{
 			return new Dingo\Api\Auth\BasicProvider($app['auth']);
 		},
-        'oauth2' => function($app)
-        {
-            return new Dingo\Api\Auth\DingoOAuth2Provider($app['dingo.oauth.resource']);
-        }
+//        'oauth2' => function($app)
+//        {
+//            return new Dingo\Api\Auth\DingoOAuth2Provider($app['dingo.oauth.resource']);
+//        }
 	],
 
 	/*
