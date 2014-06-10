@@ -67,6 +67,7 @@
         table {
             /*border-collapse: collapse;*/
             border-spacing:  0;
+            page-break-inside: avoid;
         }
 
         td {

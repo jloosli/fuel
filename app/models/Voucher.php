@@ -1,6 +1,7 @@
 <?php
 
 class Voucher extends Model {
+
     protected $fillable = [
         'issued_to',
         'amount'
