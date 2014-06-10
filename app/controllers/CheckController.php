@@ -91,8 +91,14 @@ class CheckController extends \BaseController {
         }
         $check->total_issued += $toIssue;
         $check->save();
-        // @todo Generate PDF
-        return Response::json(['meta'=>['message'=>'success', 'code'=>200]]);
+        $ids = array_map(function($voucher) {
+            return $voucher->id;
+        }, $vouchers);
+        return Response::json(['meta'=>[
+            'message'=>'success',
+            'code'=>200,
+            'ids'=> implode(",",$ids)
+        ]]);
 
     }
 

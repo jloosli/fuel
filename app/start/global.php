@@ -64,6 +64,18 @@ App::error( function ( \Jloosli\Fuel\FuelError $exception, $code ) {
         ],
         403 ); // Send 403 error
 } );
+App::error(function ( \Illuminate\Database\Eloquent\ModelNotFoundException $exception, $code ) {
+    Log::error( $exception );
+
+    return Response::json( [
+            'meta' => [
+                'error'   => true,
+                'message' => "Could not find item",
+                'code'    => 400
+            ]
+        ],
+        400 );
+} );
 
 /*
 |--------------------------------------------------------------------------

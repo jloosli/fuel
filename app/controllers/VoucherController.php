@@ -69,7 +69,7 @@ class VoucherController extends \BaseController {
         $result  = $voucher->toArray();
 
         return Response::json( [
-            'meta'     => [ 'message' => 'success', 'code' => 200 ],
+            'meta'     => [ 'message' => 'success', 'code' => 200, 'used' => $result['redeemed'] === "1" ],
             'vouchers' => $result
         ] );
 
@@ -148,7 +148,6 @@ class VoucherController extends \BaseController {
             $voucher->qr =sprintf( "<img src='data:image/png;base64,%s' />", $qrImg );
             $voucher->amount_text = sprintf("%s dollars ($%0.2f) of GAS only ",ucfirst($nf->format(10)),10);
             $voucher->issued_date = date("M j, Y",strtotime($voucher->created_at));
-            $voucher->external_id = dechex($voucher->id).strtotime($voucher->created_at);
             return $voucher;
         });
         $data   = ['data'=>$vouchers];
