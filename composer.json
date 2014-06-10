@@ -5,17 +5,19 @@
     "license":           "MIT",
     "version":           "0.1",
     "require":           {
-        "laravel/framework":     "4.2.*",
-        "way/database":          "dev-master",
-        "aferrandini/phpqrcode": "1.0.1",
-        "ext-intl":              "*",
-        "mikehaertl/phpwkhtmltopdf": "*"
+        "laravel/framework":         "4.2.*",
+        "way/database":              "dev-master",
+        "aferrandini/phpqrcode":     "1.0.1",
+        "ext-intl":                  "*",
+        "mikehaertl/phpwkhtmltopdf": "*",
+        "dingo/api":                 "0.*",
+        "dingo/oauth2-server-laravel": "0.*"
     },
     "require-dev":       {
         "ext-pdo_sqlite":  "*",
         "phpunit/phpunit": "4.1.*",
         "mockery/mockery": "dev-master",
-        "way/generators": "2.*"
+        "way/generators":  "2.*"
     },
     "repositories":      [
         {

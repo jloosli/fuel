@@ -126,7 +126,8 @@ return array(
         'Illuminate\View\ViewServiceProvider',
         'Illuminate\Workbench\WorkbenchServiceProvider',
 
-        'Way\Generators\GeneratorsServiceProvider'
+        'Way\Generators\GeneratorsServiceProvider',
+        'Dingo\Api\ApiServiceProvider'
 
     ),
     /*
@@ -161,7 +162,7 @@ return array(
         'Cache'       => 'Illuminate\Support\Facades\Cache',
         'ClassLoader' => 'Illuminate\Support\ClassLoader',
         'Config'      => 'Illuminate\Support\Facades\Config',
-        'Controller'  => 'Illuminate\Routing\Controller',
+        'Controller'  => 'Dingo\Api\Routing\Controller',
         'Cookie'      => 'Illuminate\Support\Facades\Cookie',
         'Crypt'       => 'Illuminate\Support\Facades\Crypt',
         'DB'          => 'Illuminate\Support\Facades\DB',
@@ -192,6 +193,7 @@ return array(
         'Validator'   => 'Illuminate\Support\Facades\Validator',
         'View'        => 'Illuminate\Support\Facades\View',
         'Model'       => 'Way\Database\Model',
+        'API' => 'Dingo\Api\Facades\API',
 
 
     ),
