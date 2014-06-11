@@ -127,7 +127,8 @@ return array(
         'Illuminate\Workbench\WorkbenchServiceProvider',
 
         'Way\Generators\GeneratorsServiceProvider',
-        'Dingo\Api\ApiServiceProvider'
+        'Dingo\Api\ApiServiceProvider',
+        'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
 
     ),
     /*
@@ -194,6 +195,7 @@ return array(
         'View'        => 'Illuminate\Support\Facades\View',
         'Model'       => 'Way\Database\Model',
         'API' => 'Dingo\Api\Facades\API',
+
 
 
     ),

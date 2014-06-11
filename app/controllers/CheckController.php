@@ -14,7 +14,7 @@ class CheckController extends \BaseController {
         $checks = Check::all();
         $result = $checks->toArray();
 
-        return Response::json( [
+        return Response::make( [
             'meta'   => [ 'message' => 'success', 'code' => 200 ],
             'checks' => $result
         ] );
@@ -40,7 +40,7 @@ class CheckController extends \BaseController {
             $result = [ 'meta' => [ 'message' => 'failure', 'code' => 1, 'errors' => $check->getErrors() ] ];
         }
 
-        return Response::json( $result );
+        return Response::make( $result );
     }
 
 
@@ -55,7 +55,7 @@ class CheckController extends \BaseController {
         $check  = Check::findOrFail( $id );
         $result = $check->toArray();
 
-        return Response::json( [
+        return Response::make( [
             'meta'   => [ 'message' => 'success', 'code' => 200 ],
             'checks' => $result
         ] );
@@ -65,7 +65,7 @@ class CheckController extends \BaseController {
         $check = Check::findOrFail($id);
         $vouchers = $check->vouchers();
 
-        return Response::json( [
+        return Response::make( [
             'meta' => ['message' => 'success', 'code' => 200],
             'vouchers' => $vouchers
         ]);
@@ -94,7 +94,7 @@ class CheckController extends \BaseController {
         $ids = array_map(function($voucher) {
             return $voucher->id;
         }, $vouchers);
-        return Response::json(['meta'=>[
+        return Response::make(['meta'=>[
             'message'=>'success',
             'code'=>200,
             'ids'=> implode(",",$ids)
@@ -138,7 +138,7 @@ class CheckController extends \BaseController {
             $result = [ 'meta' => [ 'message' => 'failure', 'code' => 1, 'errors' => $check->getErrors() ] ];
         }
 
-        return Response::json( $result );
+        return Response::make( $result );
     }
 
 
@@ -156,7 +156,7 @@ class CheckController extends \BaseController {
             throw new \Exception('Check has already had vouchers created', static::CHECK_USED);
         }
         $check->delete();
-        return Response::json( ['meta'=>['message'=> 'success', 'code' => 200]] );
+        return Response::make( ['meta'=>['message'=> 'success', 'code' => 200]] );
     }
 
 
