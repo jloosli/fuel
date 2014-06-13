@@ -25,7 +25,7 @@ return array(
     |
     */
 
-    'url'             => 'http://fuel.loc',
+    'url'             => 'http://fuel.avantidevelopment.com',
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
