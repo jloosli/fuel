@@ -37,6 +37,7 @@ Route::get('/vouchers/print/{vouchers}/{pdf?}', [
 ]);
 
 Route::get( '/', function () {
+    return Redirect::to('index.html');
     return View::make( 'hello' );
 } );
 
