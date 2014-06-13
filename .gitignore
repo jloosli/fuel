@@ -9,3 +9,11 @@ Thumbs.db
 .idea
 
 _ide_helper.php
+
+temp
+
+public/dist/
+node_modules
+_SpecRunner.html
+test-results.xml
+
