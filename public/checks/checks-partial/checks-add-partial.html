@@ -1,0 +1,19 @@
+<div class="col-md-4 col-md-push-4">
+    <h2>Add Check</h2>
+    <form role="form" ng-submit="addCheck()">
+        <div class="form-group">
+            <label for="checknum">Check Number</label>
+            <input class="form-control" name="checknum" id="checknum" type="number" ng-model="check.check_no"/>
+        </div>
+        <div class="form-group">
+            <label for="checkdate">Date</label>
+            <input class="form-control" name="checkdate" id="checkdate" type="date" ng-model="check.date_issued" />
+        </div>
+        <div class="form-group">
+            <label for="checkamount">Amount</label>
+            <input class="form-control" name="checkamount" id="checkamount" type="number" ng-model="check.amount" />
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+        <a ui-sref="checksIndex">Go Back</a>
+    </form>
+</div>

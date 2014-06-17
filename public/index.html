@@ -8,9 +8,6 @@
 </head>
 <body>
 
-  <!-- Livereload script for development only (stripped during dist build) -->
-  <script src="http://localhost:35729/livereload.js" data-concat="false"></script>
-
   <!-- JS from Bower Components -->
   <script src="bower_components/less.js/dist/less-1.6.2.js" data-concat="false"></script>
   <script src="bower_components/jquery/jquery.js"></script>
@@ -28,11 +25,16 @@
 
   <!-- Main App JS -->
   <script src="app.js"></script>
+  <script src="services/voucherFactory.js"></script>
+  <script src="checks/checksController.js"></script>
+  <script src="services/stateFactory.js"></script>
+
+
   <!-- Add New Component JS Above -->
 
   <div>
     <div id="content" class="container">
-        <h1>I'm here</h1>
+        <h1>Eccles Park Vouchers</h1>
       <div class="row">
         <div ui-view>
         </div>
