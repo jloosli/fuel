@@ -1,7 +1,6 @@
 'use strict';
 
-angular.module('fuel').controller('checksController', function ($scope, $state, stateFactory, restFactory) {
-    $scope.checks = [1, 2, 3, 4, 5, 6, 7, 8];
+angular.module('fuel').controller('checksController', function ($scope, $state, stateFactory, restFactory, $stateParams) {
     restFactory.Checks.get(function(result) {
         $scope.checks = result.checks;
     });
@@ -13,5 +12,11 @@ angular.module('fuel').controller('checksController', function ($scope, $state, 
         restFactory.addCheck($scope.check);
         $state.go('checksIndex');
         stateFactory.addMessage('success');
+    }
+
+    if($stateParams['id']) {
+        $scope.check = {
+            check_num : 1234
+        };
     }
 });
