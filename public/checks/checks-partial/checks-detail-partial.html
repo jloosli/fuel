@@ -24,7 +24,7 @@
             <td>{{voucher.issued_to}}</td>
             <td>{{voucher.created_at}}</td>
             <td>{{voucher.amount}}</td>
-            <td><span class="glyphicon" ng-class="{'glyphicon-ok': (voucher.redeemed == 1), 'glyphicon-remove': (voucher.redeemed == 0) }"></span>{{voucher.redeemed}}</td>
+            <td><span class="glyphicon" ng-class="{'glyphicon-ok': (voucher.redeemed == 1),'test-success': (voucher.redeemed == 1), 'glyphicon-remove': (voucher.redeemed == 0), 'text-danger': (voucher.redeemed == 0) }"></span></td>
         </tr>
         </tbody>
     </table>
