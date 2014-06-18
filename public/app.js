@@ -25,6 +25,11 @@ angular.module('fuel').config(function ($stateProvider, $urlRouterProvider) {
             templateUrl: 'vouchers/vouchers-partial/vouchers-add-partial.html',
             controller: 'vouchersController'
         })
+        .state('voucherRedeem', {
+            url:         "/vouchers/redeem",
+            templateUrl: 'vouchers/vouchers-partial/vouchers-redeem-partial.html',
+            controller: 'vouchersController'
+        })
 
 
 });
