@@ -63,10 +63,10 @@ class CheckController extends \BaseController {
 
     public function getVouchers($id) {
         $check = Check::findOrFail($id);
-        $vouchers = $check->vouchers();
+        $vouchers = $check->vouchers;
 
         return Response::make( [
-            'meta' => ['message' => 'success', 'code' => 200],
+            'meta' => ['message' => 'success', 'code' => 200, 'count' => count($vouchers)],
             'vouchers' => $vouchers
         ]);
     }

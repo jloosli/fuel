@@ -3,6 +3,14 @@
 angular.module('fuel').controller('checksController', function ($scope, $state, stateFactory, restFactory, $stateParams) {
     restFactory.Checks.get(function(result) {
         $scope.checks = result.checks;
+        if($stateParams['id']) {
+            $scope.check = _.find($scope.checks, function(check) {
+                return check.id === $stateParams['id'];
+            });
+            restFactory.Checks.getVouchers({id: $stateParams['id']}, function(result) {
+                $scope.check.vouchers = result.vouchers;
+            });
+        }
     });
 
     $scope.message = stateFactory.getMessage();
@@ -12,11 +20,5 @@ angular.module('fuel').controller('checksController', function ($scope, $state, 
         restFactory.addCheck($scope.check);
         $state.go('checksIndex');
         stateFactory.addMessage('success');
-    }
-
-    if($stateParams['id']) {
-        $scope.check = {
-            check_num : 1234
-        };
     }
 });
