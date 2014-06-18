@@ -1,21 +1,23 @@
 <div>
     <h1>Checks</h1>
-    <a ui-sref="checksAdd">Add a Check</a>
-    <p>{{message}}</p>
+    <a class="btn btn-default" ui-sref="checksAdd">Add a Check</a>
+    <a class="btn btn-default" ui-sref="voucherAdd">Issue a Voucher</a>
+    <p >{{message}}</p>
+    <p ng-bind-html="link"></p>
     <div class="row" >
-        <div class="col-sm-2"><strong>Issued Date</strong></div>
-        <div class="col-sm-2"><strong>Check</strong></div>
-        <div class="col-sm-2"><strong>Amount</strong></div>
-        <div class="col-sm-2"><strong>Issued</strong></div>
-        <div class="col-sm-2"><strong>Redeemed</strong></div>
-        <div class="col-sm-2"><strong>Vouchers</strong></div>
+        <div class="col-xs-2"><strong>Issued Date</strong></div>
+        <div class="col-xs-2"><strong>Check</strong></div>
+        <div class="col-xs-2"><strong>Amount</strong></div>
+        <div class="col-xs-2"><strong>Issued</strong></div>
+        <div class="col-xs-2"><strong>Redeemed</strong></div>
+        <div class="col-xs-2"><strong>Vouchers</strong></div>
     </div>
-    <div class="row" ng-repeat="check in checks" ng-class="{success: (check.total_issued === check.total_redeemed)}">
-        <div class="col-sm-2">{{check.date_issued}}</div>
-        <div class="col-sm-2">{{check.check_no}}</div>
-        <div class="col-sm-2">{{check.amount}}</div>
-        <div class="col-sm-2">{{check.total_issued}}</div>
-        <div class="col-sm-2">{{check.total_redeemed}}</div>
-        <div class="col-sm-2"><a ui-sref="checkDetails({id: check.id})">Vouchers</a></div>
+    <div class="row" ng-repeat="check in checks" ng-class="{'bg-info': (check.total_issued === check.amount && check.total_redeemed !== check.amount), 'bg-success': (check.total_redeemed === check.amount)}">
+        <div class="col-xs-2">{{check.date_issued}}</div>
+        <div class="col-xs-2">{{check.check_no}}</div>
+        <div class="col-xs-2">{{check.amount}}</div>
+        <div class="col-xs-2">{{check.total_issued}}</div>
+        <div class="col-xs-2">{{check.total_redeemed}}</div>
+        <div class="col-xs-2"><a ui-sref="checkDetails({id: check.id})">Vouchers</a></div>
     </div>
 </div>

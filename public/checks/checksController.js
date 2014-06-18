@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('fuel').controller('checksController', function ($scope, $state, stateFactory, restFactory, $stateParams) {
+angular.module('fuel').controller('checksController', function ($scope, $state, $sce, stateFactory, restFactory, $stateParams) {
     restFactory.Checks.get(function(result) {
         $scope.checks = result.checks;
         if($stateParams['id']) {
@@ -14,6 +14,10 @@ angular.module('fuel').controller('checksController', function ($scope, $state, 
     });
 
     $scope.message = stateFactory.getMessage();
+    var link = stateFactory.getLink();
+    if(link) {
+        $scope.link = $sce.trustAsHtml(link);
+    }
 
     $scope.addCheck = function() {
         console.log($scope.check);

@@ -20,6 +20,11 @@ angular.module('fuel').config(function ($stateProvider, $urlRouterProvider) {
             templateUrl: 'checks/checks-partial/checks-detail-partial.html',
             controller: 'checksController'
         })
+        .state('voucherAdd', {
+            url:         "/vouchers/add",
+            templateUrl: 'vouchers/vouchers-partial/vouchers-add-partial.html',
+            controller: 'vouchersController'
+        })
 
 
 });

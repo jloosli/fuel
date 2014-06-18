@@ -29,10 +29,10 @@ class CheckController extends \BaseController {
      * @return Response
      */
     public function store() {
-        $check            = new Check;
-        $check->amount    = Input::get( 'amount' );
-        $check->check_no = Input::get( 'check_no' );
-        $check->date_issued  = Input::get( 'date_issued' );
+        $check              = new Check;
+        $check->amount      = Input::get( 'amount' );
+        $check->check_no    = Input::get( 'check_no' );
+        $check->date_issued = Input::get( 'date_issued' );
 
         if ( $check->save() ) {
             $result = [ 'meta' => [ 'message' => 'success', 'code' => 200, 'id' => $check->id ] ];
@@ -61,44 +61,60 @@ class CheckController extends \BaseController {
         ] );
     }
 
-    public function getVouchers($id) {
-        $check = Check::findOrFail($id);
+    public function getOpenChecks() {
+        $checks = Check::whereRaw( '`total_issued` <> `amount`' )->get();
+//        return $checks;
+        return Response::make( [
+            'meta'   => [
+                'message' => 'success',
+                'code'    => 200,
+                'count'   => count( $checks )
+            ],
+            'checks' => $checks->toArray()
+        ] );
+    }
+
+    public function getVouchers( $id ) {
+        $check    = Check::findOrFail( $id );
         $vouchers = $check->vouchers;
 
         return Response::make( [
-            'meta' => ['message' => 'success', 'code' => 200, 'count' => count($vouchers)],
+            'meta'     => [ 'message' => 'success', 'code' => 200, 'count' => count( $vouchers ) ],
             'vouchers' => $vouchers
-        ]);
+        ] );
     }
 
-    public function createVouchers($id) {
-        $check = Check::findOrFail($id);
+    public function createVouchers( $id ) {
+        $check         = Check::findOrFail( $id );
         $totalVouchers = (int) Input::get( 'vouchers' );
-        $toIssue = $totalVouchers * $this->stdVoucherAmt;
-        if(($check->amount - $check->total_issued) < $toIssue ) {
-            throw new \Jloosli\Fuel\FuelError("Not enough funds available on this check", static::INSUFFICIENT_FUNDS);
+        $toIssue       = $totalVouchers * $this->stdVoucherAmt;
+        if ( ( $check->amount - $check->total_issued ) < $toIssue ) {
+            throw new \Jloosli\Fuel\FuelError( "Not enough funds available on this check", static::INSUFFICIENT_FUNDS );
         }
-        $vouchers = [];
+        $vouchers = [ ];
 
-        for($i=0; $i< $totalVouchers; $i++) {
-            $voucher = new Voucher;
-            $voucher->check_id = $id;
-            $voucher->issued_to = Input::get('issued_to');
-            $voucher->redeemed = 0;
-            $voucher->amount = $this->stdVoucherAmt;
+        for ( $i = 0; $i < $totalVouchers; $i ++ ) {
+            $voucher            = new Voucher;
+            $voucher->check_id  = $id;
+            $voucher->issued_to = Input::get( 'issued_to' );
+            $voucher->redeemed  = 0;
+            $voucher->amount    = $this->stdVoucherAmt;
             $voucher->save();
             $vouchers[] = $voucher;
         }
         $check->total_issued += $toIssue;
         $check->save();
-        $ids = array_map(function($voucher) {
+        $ids = array_map( function ( $voucher ) {
             return $voucher->id;
-        }, $vouchers);
-        return Response::make(['meta'=>[
-            'message'=>'success',
-            'code'=>200,
-            'ids'=> implode(",",$ids)
-        ]]);
+        }, $vouchers );
+
+        return Response::make( [
+            'meta' => [
+                'message' => 'success',
+                'code'    => 200,
+                'ids'     => implode( ",", $ids )
+            ]
+        ] );
 
     }
 
@@ -124,9 +140,9 @@ class CheckController extends \BaseController {
      * @return Response
      */
     public function update( $id ) {
-        $check            = Check::findOrFail($id);
-        if ($check->redeemed === 1) {
-            throw new \Exception('Check has already had vouchers created against it.', static::CHECK_USED);
+        $check = Check::findOrFail( $id );
+        if ( $check->redeemed === 1 ) {
+            throw new \Exception( 'Check has already had vouchers created against it.', static::CHECK_USED );
         }
         $check->amount    = Input::get( 'amount' );
         $check->issued_to = Input::get( 'issued_to' );
@@ -151,12 +167,13 @@ class CheckController extends \BaseController {
      * @return Response
      */
     public function destroy( $id ) {
-        $check            = Check::findOrFail($id);
-        if ($check->redeemed === 1) {
-            throw new \Exception('Check has already had vouchers created', static::CHECK_USED);
+        $check = Check::findOrFail( $id );
+        if ( $check->redeemed === 1 ) {
+            throw new \Exception( 'Check has already had vouchers created', static::CHECK_USED );
         }
         $check->delete();
-        return Response::make( ['meta'=>['message'=> 'success', 'code' => 200]] );
+
+        return Response::make( [ 'meta' => [ 'message' => 'success', 'code' => 200 ] ] );
     }
 
 

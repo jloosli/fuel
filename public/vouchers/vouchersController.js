@@ -1,14 +1,42 @@
 'use strict';
 
 angular.module('fuel').controller('vouchersController', function ($scope, $state, stateFactory, restFactory) {
-    $scope.checks = [1, 2, 3, 4, 5, 6, 7, 8];
+    restFactory.Checks.getOpen(function (results) {
+        $scope.openChecks = _.map(results.checks, function (val) {
+            var template = _.template("<%= check_no %> - $<%= remaining %> remaining");
+            var remaining = (parseInt(val.amount) - parseInt(val.total_issued));
+            val['label'] = template({check_no: val.check_no, remaining: remaining});
+            val['remaining'] = remaining;
+            return val;
+        });
+    });
+
+    $scope.availableVouchers = function () {
+        if ($scope.openChecks && $scope.voucher && $scope.voucher.check_id) {
+            var current = _.find($scope.openChecks, function (check) {
+                return check.id === $scope.voucher.check_id;
+            });
+            var available = current.remaining / 10;
+            return _.range(1, available + 1);
+        }
+        return [];
+    };
 
     $scope.message = stateFactory.getMessage();
 
-    $scope.addCheck = function() {
-        console.log($scope.check);
-        restFactory.addCheck($scope.check);
-        $state.go('checksIndex');
-        stateFactory.addMessage('success');
+    $scope.addVoucher = function () {
+        var ids = '';
+        restFactory.Checks.addVouchers({
+            id:        $scope.voucher.check_id,
+            issued_to: $scope.voucher.issued_to,
+            vouchers:  $scope.voucher.vouchers
+        }, function (result) {
+            ids = result.meta.ids
+            $state.go('checksIndex');
+            var msg = 'Vouchers Added.';
+            stateFactory.addMessage(msg);
+            stateFactory.addLink('/vouchers/print/' + ids , "Download Vouchers", true);
+        });
+
     }
 });

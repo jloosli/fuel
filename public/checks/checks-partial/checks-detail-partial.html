@@ -1,11 +1,12 @@
 <div>
     <h2>Check {{check.check_no}}</h2>
+    <a ui-sref="checksIndex">back</a>
 
     <div class="row">
-        <div class="col-xs-2">Amount: {{check.amount}}</div>
-        <div class="col-xs-2">Issued: {{check.total_issued | currency}}</div>
-        <div class="col-xs-2">Redeemed: {{check.total_redeemed | currency}}</div>
-        <div class="col-xs-2">Date: {{check.date_issued }}</div>
+        <div class="col-xs-3">Amount: {{check.amount}}</div>
+        <div class="col-xs-3">Issued: {{check.total_issued | currency}}</div>
+        <div class="col-xs-3">Redeemed: {{check.total_redeemed | currency}}</div>
+        <div class="col-xs-3">Date: {{check.date_issued }}</div>
     </div>
     <h3>Vouchers</h3>
     <table class="table">

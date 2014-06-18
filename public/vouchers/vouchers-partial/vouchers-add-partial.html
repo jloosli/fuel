@@ -1,17 +1,24 @@
 <div class="col-md-4 col-md-push-4">
-    <h2>Add Check</h2>
-    <form role="form" ng-submit="addCheck()">
+    <h2>Issue Vouchers</h2>
+    <form role="form" ng-submit="addVoucher()">
         <div class="form-group">
-            <label for="checknum">Check Number</label>
-            <input class="form-control" name="checknum" id="checknum" type="number" ng-model="check.check_no"/>
+            <label for="check_id">Check</label>
+            <select class="form-control"
+                    ng-model="voucher.check_id"
+                    ng-options="check.id as check.label for check in openChecks">
+            </select>
         </div>
         <div class="form-group">
-            <label for="checkdate">Date</label>
-            <input class="form-control" name="checkdate" id="checkdate" type="date" ng-model="check.date_issued" />
+            <label for="issued_to">Recipient</label>
+            <input class="form-control" name="issued_to" id="issued_to" type="text" required ng-model="voucher.issued_to"/>
         </div>
         <div class="form-group">
-            <label for="checkamount">Amount</label>
-            <input class="form-control" name="checkamount" id="checkamount" type="number" ng-model="check.amount" />
+            <label for="voucher_number">Number of Vouchers</label>
+            <select class="form-control"
+                    ng-model="voucher.vouchers"
+                    ng-options="val for val in availableVouchers()">
+            </select>
+            <input class="form-control" name="voucher_number" id="voucher_number" type="number" ng-model="voucher.vouchers" />
         </div>
         <button type="submit" class="btn btn-default">Submit</button>
         <a ui-sref="checksIndex">Go Back</a>

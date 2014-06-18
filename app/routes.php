@@ -23,6 +23,7 @@ Route::api( array( 'version' => 'v1' ), function () {
     Route::group( [ 'prefix' => 'checks' ], function () {
         Route::get( '', [ 'as' => 'allChecks', 'uses' => 'CheckController@index' ] );
         Route::post( '', [ 'as' => 'addCheck', 'uses' => 'CheckController@store' ] );
+        Route::get( 'open', [ 'as' => 'openChecks', 'uses' => 'CheckController@getOpenChecks' ] );
         Route::get( '{id}', [ 'as' => 'checkInfo', 'uses' => 'CheckController@show' ] );
         Route::get( '{id}/vouchers', [ 'as' => 'showVouchersFromCheck', 'uses' => 'CheckController@getVouchers' ] );
         Route::post( '{id}/vouchers', [ 'as' => 'issueVouchers', 'uses' => 'CheckController@createVouchers' ] );
