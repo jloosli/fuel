@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('fuel').factory('voucherFactory', function($resource) {
+angular.module('fuel').factory('restFactory', function($resource) {
     var factory = {},
         Checks = $resource('/api/checks'),
         Vouchers = $resource('/api/vouchers');
@@ -19,5 +19,8 @@ angular.module('fuel').factory('voucherFactory', function($resource) {
     factory.verifyVoucher = function(id) {
 
     };
+
+    factory.Checks = $resource('/api/checks');
+    factory.Vouchers = $resource('/api/vouchers');
     return factory;
 });

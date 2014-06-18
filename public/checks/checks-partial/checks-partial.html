@@ -2,8 +2,26 @@
     <h1>Checks</h1>
     <a ui-sref="checksAdd">Add a Check</a>
     <p>{{message}}</p>
-    <ul>
-        <li ng-repeat="check in checks">{{check}}</li>
-    </ul>
-
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Issued Date</th>
+            <th>Check</th>
+            <th>Amount</th>
+            <th>Issued</th>
+            <th>Redeemed</th>
+            <th>Vouchers</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="check in checks" ng-class="{redeemed: (check.total_issued == check.total_redeemed)}">
+            <td>{{check.date_issued}}</td>
+            <td>{{check.check_no}}</td>
+            <td>{{check.amount}}</td>
+            <td>{{check.total_issued}}</td>
+            <td>{{check.total_redeemed}}</td>
+            <td>vouchers link</td>
+        </tr>
+        </tbody>
+    </table>
 </div>

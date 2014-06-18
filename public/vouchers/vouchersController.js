@@ -1,10 +1,7 @@
 'use strict';
 
-angular.module('fuel').controller('checksController', function ($scope, $state, stateFactory, restFactory) {
+angular.module('fuel').controller('vouchersController', function ($scope, $state, stateFactory, restFactory) {
     $scope.checks = [1, 2, 3, 4, 5, 6, 7, 8];
-    restFactory.Checks.get(function(result) {
-        $scope.checks = result.checks;
-    });
 
     $scope.message = stateFactory.getMessage();
 

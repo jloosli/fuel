@@ -1,4 +1,4 @@
-angular.module('fuel', ['ui.bootstrap', 'ui.utils', 'ui.router', 'ngAnimate']);
+angular.module('fuel', ['ui.bootstrap', 'ui.utils', 'ui.router', 'ngAnimate','ngResource']);
 
 angular.module('fuel').config(function ($stateProvider, $urlRouterProvider) {
 
