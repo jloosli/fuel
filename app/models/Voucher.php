@@ -22,7 +22,7 @@ class Voucher extends Model {
     ];
 
     public function check() {
-        $this->belongsTo('Check');
+        return $this->belongsTo('Check');
     }
 
 }

@@ -30,7 +30,9 @@ Route::api( array( 'version' => 'v1' ), function () {
     } );
 } );
 
+Route::get( 'voucher/redeem', [ 'as' => 'redeemVoucher', 'uses' => 'VoucherController@redeem' ] );
 Route::get( 'voucher/{id}', [ 'as' => 'getVoucher', 'uses' => 'VoucherController@show' ] );
+
 
 Route::get('/vouchers/print/{vouchers}/{pdf?}', [
     'as'=>'printVouchers',

@@ -2,4 +2,10 @@
     <h2>Redeem Vouchers</h2>
     <a class="btn btn-default" ui-sref="checksIndex">Go back to checks</a>
 
+    <a class="btn btn-large btn-default" id="redeem">Redeem Check</a>
+    <script>
+        var returnUrl = "http://fuel.loc/redeem?url={CODE}";
+        var base = "http://zxing.appspot.com/scan?SCAN_FORMATS=QR_CODE&ret=" + encodeURI(returnUrl);
+        document.getElementById('redeem').href = base;
+    </script>
 </div>

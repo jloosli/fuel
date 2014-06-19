@@ -165,4 +165,22 @@ class VoucherController extends \BaseController {
 
     }
 
+    public function redeem() {
+        $url = Input::get('url');
+        $parts = explode('/',$url);
+        $id = end($parts);
+        $result = Voucher::where('id',$id)->where('redeemed',0)->get();
+        if(count($result) === 1) {
+            $voucher=$result[0];
+            $voucher->redeemed = 1;
+            $check = $voucher->check;
+            $check->total_redeemed += $voucher->amount;
+            $voucher->save();
+            $check->save();
+            return $voucher;
+        }
+        return "Already Redeemed";
+
+    }
+
 }
