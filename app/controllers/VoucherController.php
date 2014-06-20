@@ -69,8 +69,8 @@ class VoucherController extends \BaseController {
 
         $messages = [ 'valid', 'used', 'invalid' ];
         $status   = $messages[ array_rand( $messages ) ];
-        if($voucher) {
-            if($voucher->redeemed === "1") {
+        if ( $voucher ) {
+            if ( $voucher->redeemed === "1" ) {
                 $status = 'used';
             } else {
                 $status = 'valid';
@@ -195,13 +195,16 @@ class VoucherController extends \BaseController {
             return $view;
         }
         $rendered = $view->render();
-        $options  = [ 'page-size' => 'Letter' ];
+        $options  = [ 'page-size' => 'Letter'];
+        if (isset($_ENV['WKHTMLTOPDF'])) {
+            $options['binPath'] = $_ENV['WKHTMLTOPDF'];
+        }
         $pdfFile  = new WkHtmlToPdf( $options );
         $pdfFile->addPage( $rendered );
 
-        return $pdfFile->send();
-
-
+        if(!$pdfFile->send()) {
+            echo $pdfFile->getError();
+        }
     }
 
     public function redeem() {
