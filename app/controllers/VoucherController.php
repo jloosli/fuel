@@ -58,15 +58,53 @@ class VoucherController extends \BaseController {
 
 
     /**
-     * Display the specified resource.
+     * Shows whether a voucher is valid.
      *
      * @param  int $id
      *
      * @return Response
      */
     public function show( $id ) {
-        $voucher = Voucher::findOrFail( $id );
-        $result  = $voucher->toArray();
+        $voucher = Voucher::find( $id );
+
+        $messages = [ 'valid', 'used', 'invalid' ];
+        $status   = $messages[ array_rand( $messages ) ];
+        if($voucher) {
+            if($voucher->redeemed === "1") {
+                $status = 'used';
+            } else {
+                $status = 'valid';
+            }
+        } else {
+            $status = 'invalid';
+        }
+        switch ( $status ) {
+            case 'valid':
+                $data = [
+                    'message'   => 'Voucher is Valid',
+                    'issued_to' => $voucher->issued_to,
+                    'amount'    => (float) $voucher->amount,
+                    ''
+                ];
+                break;
+            case 'used':
+                $data = [
+                    'message'   => 'Voucher has already been used',
+                    'issued_to' => "",
+                    'amount'    => 0
+                ];
+                break;
+            case 'invalid':
+                $data = [
+                    'message'   => 'Voucher is Invalid',
+                    'issued_to' => "",
+                    'amount'    => 0
+                ];
+                break;
+        }
+        $data['status'] = $status;
+
+        return View::make( 'voucher-valid', $data );
 
         return Response::make( [
             'meta'     => [ 'message' => 'success', 'code' => 200, 'used' => $result['redeemed'] === "1" ],
@@ -137,22 +175,23 @@ class VoucherController extends \BaseController {
     }
 
     public function print_vouchers( $voucher_ids = "", $pdf = true ) {
-        $nf  = new NumberFormatter( 'en-US', NumberFormatter::SPELLOUT );
-        $v = Voucher::select('*')->whereIn('id',explode(",",$voucher_ids))->get();
-        $vouchers = $v->each(function($voucher) use ($nf) {
+        $nf       = new NumberFormatter( 'en-US', NumberFormatter::SPELLOUT );
+        $v        = Voucher::select( '*' )->whereIn( 'id', explode( ",", $voucher_ids ) )->get();
+        $vouchers = $v->each( function ( $voucher ) use ( $nf ) {
             $url = route( 'getVoucher', [ 'id' => $voucher->id ] );
             ob_start();
             \PHPQRCode\QRcode::png( $url );
             $qrImg = base64_encode( ob_get_contents() );
             ob_end_clean();
-            $voucher->qr =sprintf( "<img src='data:image/png;base64,%s' />", $qrImg );
-            $voucher->amount_text = sprintf("%s dollars ($%0.2f) of GAS only ",ucfirst($nf->format(10)),10);
-            $voucher->issued_date = date("M j, Y",strtotime($voucher->created_at));
+            $voucher->qr          = sprintf( "<img src='data:image/png;base64,%s' />", $qrImg );
+            $voucher->amount_text = sprintf( "%s dollars ($%0.2f) of GAS only ", ucfirst( $nf->format( 10 ) ), 10 );
+            $voucher->issued_date = date( "M j, Y", strtotime( $voucher->created_at ) );
+
             return $voucher;
-        });
-        $data   = ['data'=>$vouchers];
-        $view   = View::make( 'vouchers')->nest('child','child.voucher', $data);
-        if ( $pdf  === "0") {
+        } );
+        $data     = [ 'data' => $vouchers ];
+        $view     = View::make( 'vouchers' )->nest( 'child', 'child.voucher', $data );
+        if ( $pdf === "0" ) {
             return $view;
         }
         $rendered = $view->render();
@@ -166,19 +205,21 @@ class VoucherController extends \BaseController {
     }
 
     public function redeem() {
-        $url = Input::get('url');
-        $parts = explode('/',$url);
-        $id = end($parts);
-        $result = Voucher::where('id',$id)->where('redeemed',0)->get();
-        if(count($result) === 1) {
-            $voucher=$result[0];
+        $url    = Input::get( 'url' );
+        $parts  = explode( '/', $url );
+        $id     = end( $parts );
+        $result = Voucher::where( 'id', $id )->where( 'redeemed', 0 )->get();
+        if ( count( $result ) === 1 ) {
+            $voucher           = $result[0];
             $voucher->redeemed = 1;
-            $check = $voucher->check;
+            $check             = $voucher->check;
             $check->total_redeemed += $voucher->amount;
             $voucher->save();
             $check->save();
+
             return $voucher;
         }
+
         return "Already Redeemed";
 
     }
