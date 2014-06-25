@@ -195,14 +195,14 @@ class VoucherController extends \BaseController {
             return $view;
         }
         $rendered = $view->render();
-        $options  = [ 'page-size' => 'Letter'];
-        if (isset($_ENV['WKHTMLTOPDF'])) {
+        $options  = [ 'page-size' => 'Letter' ];
+        if ( isset( $_ENV['WKHTMLTOPDF'] ) ) {
             $options['binPath'] = $_ENV['WKHTMLTOPDF'];
         }
-        $pdfFile  = new WkHtmlToPdf( $options );
+        $pdfFile = new WkHtmlToPdf( $options );
         $pdfFile->addPage( $rendered );
 
-        if(!$pdfFile->send()) {
+        if ( !$pdfFile->send() ) {
             echo $pdfFile->getError();
         }
     }
